@@ -111,8 +111,9 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
                         }
                     }
                 }
-
-               _context.Add(lecturer);
+                lecturer.SubmittedDate = DateTime.Now;
+                lecturer.Status = ClaimStatus.Pending;
+                _context.Add(lecturer);
                 await _context.SaveChangesAsync();
                 TempData["Success"] = "Successfully added new claim!";
                 return RedirectToAction(nameof(Index));
