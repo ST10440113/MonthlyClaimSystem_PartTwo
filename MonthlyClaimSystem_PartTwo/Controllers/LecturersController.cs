@@ -69,7 +69,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
         // POST: Lecturers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClaimId,FirstName,LastName,Faculty,ClaimName,Amount,StartDate,EndDate,HoursWorked,HourlyRate,Description,Email,ContactNum")] Lecturer lecturer, List<IFormFile> documents)
+        public async Task<IActionResult> Create([Bind("ClaimId,LecturerRefID,FirstName,LastName,Faculty,ClaimName,Amount,StartDate,EndDate,HoursWorked,HourlyRate,Description,Email,ContactNum")] Lecturer lecturer, List<IFormFile> documents)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
             catch (Exception ex)
             {
                 //viewbag is a dictionary
-                ViewBag["Error"] = "Error adding claim. " + ex.Message;
+                ViewBag.Error = "Error adding claim. " + ex.Message;
                 return View(lecturer);
             }
 

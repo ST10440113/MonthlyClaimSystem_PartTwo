@@ -17,32 +17,32 @@ namespace MonthlyClaimSystem_PartTwo.Models
 
         public string ClaimName { get; set; }
 
-          public int Amount { get; set; }
+        [DataType(DataType.Currency)] public decimal Amount { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
 
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
 
         public int HoursWorked { get; set; }
 
-        [Column(TypeName = "decimal(18, 2)")] public decimal HourlyRate { get; set; }
+        [DataType(DataType.Currency)] public decimal HourlyRate { get; set; }
 
         public string Description { get; set; }
-        public string Email { get; set; }
+        [DataType(DataType.EmailAddress)] public string Email { get; set; }
 
-        public DateTime SubmittedDate { get; set; }
+        [DataType(DataType.Date)] public DateTime? SubmittedDate { get; set; }
 
-        public int SubmittedBy { get; set; }
+        public int? SubmittedBy { get; set; }
 
         public ClaimStatus Status { get; set; }
 
-        public string ReviewedBy { get; set; }
-        public DateTime ReviewedDate { get; set; }
+        public string? ReviewedBy { get; set; }
+        [DataType(DataType.Date)] public DateTime? ReviewedDate { get; set; }
 
-        public string ContactNum { get; set; }
-        public List<FileModel> UploadedFiles { get; set; }
+        [DataType(DataType.PhoneNumber)] public string ContactNum { get; set; }
+        public List<FileModel> UploadedFiles { get; set; } = new List<FileModel>();
 
         public List<ClaimReview> Reviews { get; set; } = new List<ClaimReview>();
 

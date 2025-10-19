@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MonthlyClaimSystem_PartTwo.Data;
 
@@ -11,9 +12,11 @@ using MonthlyClaimSystem_PartTwo.Data;
 namespace MonthlyClaimSystem_PartTwo.Migrations
 {
     [DbContext(typeof(MonthlyClaimSystem_PartTwoContext))]
-    partial class MonthlyClaimSystem_PartTwoContextModelSnapshot : ModelSnapshot
+    [Migration("20251019175230_thirdCreate")]
+    partial class thirdCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,8 +125,8 @@ namespace MonthlyClaimSystem_PartTwo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClaimId"));
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
 
                     b.Property<string>("ClaimName")
                         .IsRequired()
@@ -153,7 +156,7 @@ namespace MonthlyClaimSystem_PartTwo.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("HourlyRate")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<int>("HoursWorked")
                         .HasColumnType("int");
@@ -167,9 +170,10 @@ namespace MonthlyClaimSystem_PartTwo.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReviewedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("ReviewedDate")
+                    b.Property<DateTime>("ReviewedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartDate")
@@ -178,10 +182,10 @@ namespace MonthlyClaimSystem_PartTwo.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SubmittedBy")
+                    b.Property<int>("SubmittedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("SubmittedDate")
+                    b.Property<DateTime>("SubmittedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ClaimId");
