@@ -51,7 +51,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
             }
 
             var lecturer = await _context.Lecturer
-                .FirstOrDefaultAsync(m => m.LecturerId == id);
+                .FirstOrDefaultAsync(m => m.ClaimId == id);
             if (lecturer == null)
             {
                 return NotFound();
@@ -69,7 +69,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
         // POST: Lecturers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("LecturerId,FirstName,LastName,Faculty,ClaimName,Amount,StartDate,EndDate,HoursWorked,HourlyRate,Description,Email,ContactNum")] Lecturer lecturer, List<IFormFile> documents)
+        public async Task<IActionResult> Create([Bind("ClaimId,FirstName,LastName,Faculty,ClaimName,Amount,StartDate,EndDate,HoursWorked,HourlyRate,Description,Email,ContactNum")] Lecturer lecturer, List<IFormFile> documents)
         {
             try
             {
@@ -133,7 +133,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
             try
             {
                 var claim =  await _context.Lecturer
-                .FirstOrDefaultAsync(m => m.LecturerId == claimId);
+                .FirstOrDefaultAsync(m => m.ClaimId == claimId);
                 if (claim == null) { return NotFound("Claim not found."); }
 
                 var document = claim.UploadedFiles.FirstOrDefault(doc => doc.Id == docId);

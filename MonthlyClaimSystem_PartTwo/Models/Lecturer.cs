@@ -6,7 +6,9 @@ namespace MonthlyClaimSystem_PartTwo.Models
 {
     public class Lecturer
     {
-        [Key]public int LecturerId { get; set; }
+        [Key]public int ClaimId { get; set; }
+
+        public string LecturerRefID { get; set; }
 
         public string FirstName { get; set; }
         public string LastName { get; set; }

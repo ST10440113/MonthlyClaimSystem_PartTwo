@@ -27,7 +27,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Lecturer ID</th>
+                        <th>Claim ID</th>
                         <th>Claim Name</th>
                         <th>Amount</th>
                         <th>Start Date</th>
@@ -42,7 +42,7 @@
                     @foreach (var claim in Model)
                     {
                         <tr>
-                            <td><strong>LN+@claim.LecturerId</strong></td>
+                            <td><strong>LN+@claim.ClaimId</strong></td>
                             <td><strong>@claim.ClaimName</strong></td>
                             <td><strong>@claim.Amount</strong></td>
                             <td><strong>@claim.StartDate</strong></td>
@@ -63,7 +63,7 @@
                                 }
                             </td>
                             <td>
-                                <a href="/Lecturers/Details/@claim.LecturerId" class="btn btn-sm btn-outline-primary">View Details</a>
+                                <a href="/Lecturers/Details/@claim.ClaimId" class="btn btn-sm btn-outline-primary">View Details</a>
                             </td>
                         </tr>
                     }

@@ -12,8 +12,8 @@ using MonthlyClaimSystem_PartTwo.Data;
 namespace MonthlyClaimSystem_PartTwo.Migrations
 {
     [DbContext(typeof(MonthlyClaimSystem_PartTwoContext))]
-    [Migration("20251018195900_FourthCreate")]
-    partial class FourthCreate
+    [Migration("20251019161110_newCreate")]
+    partial class newCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,9 +43,6 @@ namespace MonthlyClaimSystem_PartTwo.Migrations
                     b.Property<int>("Decision")
                         .HasColumnType("int");
 
-                    b.Property<int?>("LecturerId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("ReviewDate")
                         .HasColumnType("datetime2");
 
@@ -59,7 +56,7 @@ namespace MonthlyClaimSystem_PartTwo.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LecturerId");
+                    b.HasIndex("ClaimId");
 
                     b.ToTable("ClaimReview");
                 });
@@ -72,12 +69,15 @@ namespace MonthlyClaimSystem_PartTwo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CoordinatorId"));
 
-                    b.Property<int>("LecturerId")
+                    b.Property<int>("ClaimId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LecturerClaimId")
                         .HasColumnType("int");
 
                     b.HasKey("CoordinatorId");
 
-                    b.HasIndex("LecturerId");
+                    b.HasIndex("LecturerClaimId");
 
                     b.ToTable("Coordinator");
                 });
@@ -104,7 +104,7 @@ namespace MonthlyClaimSystem_PartTwo.Migrations
                     b.Property<bool>("IsEncrypted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("LecturerId")
+                    b.Property<int?>("LecturerClaimId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UploadDate")
@@ -112,18 +112,18 @@ namespace MonthlyClaimSystem_PartTwo.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LecturerId");
+                    b.HasIndex("LecturerClaimId");
 
                     b.ToTable("FileModel");
                 });
 
             modelBuilder.Entity("MonthlyClaimSystem_PartTwo.Models.Lecturer", b =>
                 {
-                    b.Property<int>("LecturerId")
+                    b.Property<int>("ClaimId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LecturerId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClaimId"));
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
@@ -165,6 +165,10 @@ namespace MonthlyClaimSystem_PartTwo.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("LecturerRefID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ReviewedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -184,7 +188,7 @@ namespace MonthlyClaimSystem_PartTwo.Migrations
                     b.Property<DateTime>("SubmittedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("LecturerId");
+                    b.HasKey("ClaimId");
 
                     b.ToTable("Lecturer");
                 });
@@ -197,28 +201,35 @@ namespace MonthlyClaimSystem_PartTwo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ManagerId"));
 
-                    b.Property<int>("LecturerId")
+                    b.Property<int>("ClaimId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LecturerClaimId")
                         .HasColumnType("int");
 
                     b.HasKey("ManagerId");
 
-                    b.HasIndex("LecturerId");
+                    b.HasIndex("LecturerClaimId");
 
                     b.ToTable("Manager");
                 });
 
             modelBuilder.Entity("MonthlyClaimSystem_PartTwo.Models.ClaimReview", b =>
                 {
-                    b.HasOne("MonthlyClaimSystem_PartTwo.Models.Lecturer", null)
+                    b.HasOne("MonthlyClaimSystem_PartTwo.Models.Lecturer", "Lecturer")
                         .WithMany("Reviews")
-                        .HasForeignKey("LecturerId");
+                        .HasForeignKey("ClaimId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lecturer");
                 });
 
             modelBuilder.Entity("MonthlyClaimSystem_PartTwo.Models.Coordinator", b =>
                 {
                     b.HasOne("MonthlyClaimSystem_PartTwo.Models.Lecturer", "Lecturer")
                         .WithMany()
-                        .HasForeignKey("LecturerId")
+                        .HasForeignKey("LecturerClaimId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -229,14 +240,14 @@ namespace MonthlyClaimSystem_PartTwo.Migrations
                 {
                     b.HasOne("MonthlyClaimSystem_PartTwo.Models.Lecturer", null)
                         .WithMany("UploadedFiles")
-                        .HasForeignKey("LecturerId");
+                        .HasForeignKey("LecturerClaimId");
                 });
 
             modelBuilder.Entity("MonthlyClaimSystem_PartTwo.Models.Manager", b =>
                 {
                     b.HasOne("MonthlyClaimSystem_PartTwo.Models.Lecturer", "Lecturer")
                         .WithMany()
-                        .HasForeignKey("LecturerId")
+                        .HasForeignKey("LecturerClaimId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

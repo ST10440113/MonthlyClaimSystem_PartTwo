@@ -48,7 +48,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
         // GET: Managers/Create
         public IActionResult Create()
         {
-            ViewData["LecturerId"] = new SelectList(_context.Lecturer, "LecturerId", "LecturerId");
+            ViewData["ClaimId"] = new SelectList(_context.Lecturer, "ClaimId", "ClaimId");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ManagerId,LecturerId")] Manager manager)
+        public async Task<IActionResult> Create([Bind("ManagerId,ClaimId")] Manager manager)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LecturerId"] = new SelectList(_context.Lecturer, "LecturerId", "LecturerId", manager.LecturerId);
+            ViewData["ClaimId"] = new SelectList(_context.Lecturer, "ClaimId", "ClaimId", manager.ClaimId);
             return View(manager);
         }
 
@@ -82,7 +82,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
             {
                 return NotFound();
             }
-            ViewData["LecturerId"] = new SelectList(_context.Lecturer, "LecturerId", "LecturerId", manager.LecturerId);
+            ViewData["ClaimId"] = new SelectList(_context.Lecturer, "ClaimId", "ClaimId", manager.ClaimId);
             return View(manager);
         }
 
@@ -91,7 +91,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ManagerId,LecturerId")] Manager manager)
+        public async Task<IActionResult> Edit(int id, [Bind("ManagerId,ClaimId")] Manager manager)
         {
             if (id != manager.ManagerId)
             {
@@ -118,7 +118,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LecturerId"] = new SelectList(_context.Lecturer, "LecturerId", "LecturerId", manager.LecturerId);
+            ViewData["ClaimId"] = new SelectList(_context.Lecturer, "ClaimId", "ClaimId", manager.ClaimId);
             return View(manager);
         }
 

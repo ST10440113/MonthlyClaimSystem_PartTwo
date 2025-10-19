@@ -8,8 +8,8 @@ namespace MonthlyClaimSystem_PartTwo.Models
         [Key]public int ManagerId { get; set; }
 
 
-        [ForeignKey("LecturerId")]
-        public int LecturerId { get; set; }
+        [ForeignKey("ClaimId")]
+        public int ClaimId { get; set; }
         public Lecturer Lecturer { get; set; }
     }
 }

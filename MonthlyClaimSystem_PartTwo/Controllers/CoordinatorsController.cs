@@ -48,7 +48,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
         // GET: Coordinators/Create
         public IActionResult Create()
         {
-            ViewData["LecturerId"] = new SelectList(_context.Lecturer, "LecturerId", "LecturerId");
+            ViewData["ClaimId"] = new SelectList(_context.Lecturer, "ClaimId", "ClaimId");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CoordinatorId,LecturerId")] Coordinator coordinator)
+        public async Task<IActionResult> Create([Bind("CoordinatorId,ClaimId")] Coordinator coordinator)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LecturerId"] = new SelectList(_context.Lecturer, "LecturerId", "LecturerId", coordinator.LecturerId);
+            ViewData["ClaimId"] = new SelectList(_context.Lecturer, "ClaimId", "ClaimId", coordinator.ClaimId);
             return View(coordinator);
         }
 
@@ -82,7 +82,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
             {
                 return NotFound();
             }
-            ViewData["LecturerId"] = new SelectList(_context.Lecturer, "LecturerId", "LecturerId", coordinator.LecturerId);
+            ViewData["ClaimId"] = new SelectList(_context.Lecturer, "ClaimId", "ClaimId", coordinator.ClaimId);
             return View(coordinator);
         }
 
@@ -91,7 +91,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CoordinatorId,LecturerId")] Coordinator coordinator)
+        public async Task<IActionResult> Edit(int id, [Bind("CoordinatorId,ClaimId")] Coordinator coordinator)
         {
             if (id != coordinator.CoordinatorId)
             {
@@ -118,7 +118,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LecturerId"] = new SelectList(_context.Lecturer, "LecturerId", "LecturerId", coordinator.LecturerId);
+            ViewData["ClaimId"] = new SelectList(_context.Lecturer, "ClaimId", "ClaimId", coordinator.ClaimId);
             return View(coordinator);
         }
 

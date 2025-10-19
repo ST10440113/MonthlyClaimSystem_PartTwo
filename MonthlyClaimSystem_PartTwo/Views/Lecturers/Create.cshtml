@@ -21,6 +21,11 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                     <div class="mb-3">
+                        <label asp-for="LecturerRefID" class="form-label">Lecturer Ref. ID</label>
+                        <input asp-for="LecturerRefID" class="form-control" placeholder="Enter your reference ID..." />
+                        <span asp-validation-for="LecturerRefID" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
                         <label asp-for="FirstName" class="form-label">First Name</label>
                         <input asp-for="FirstName" class="form-control" placeholder="Enter your first name..." />
                         <span asp-validation-for="FirstName" class="text-danger"></span>
