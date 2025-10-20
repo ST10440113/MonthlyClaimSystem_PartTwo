@@ -17,6 +17,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
         public readonly MonthlyClaimSystem_PartTwoContext _context;
         public readonly IWebHostEnvironment _environment;
         public readonly FileEncryptionService _encryptionService;
+        public static List<Lecturer> _claims = new List<Lecturer>();
 
         public LecturersController(MonthlyClaimSystem_PartTwoContext context, IWebHostEnvironment environment)
         {
@@ -41,7 +42,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
                 return View(new List<Lecturer>());
             }
         }
-         
+
         // GET: Lecturers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -50,8 +51,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
                 return NotFound();
             }
 
-            var lecturer = await _context.Lecturer
-                .FirstOrDefaultAsync(m => m.ClaimId == id);
+            var lecturer = _context.Lecturer.Include(l => l.UploadedFiles).FirstOrDefault(l => l.ClaimId == id);
             if (lecturer == null)
             {
                 return NotFound();
@@ -100,7 +100,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
                                 await _encryptionService.EncryptFileAsync(fileStream, encryptedFilePath);
                             }
 
-                        lecturer.UploadedFiles.Add(new FileModel
+                            lecturer.UploadedFiles.Add(new FileModel
                             {
                                 FileName = file.FileName,
                                 FilePath = "/uploads/" + uniqueFileName,
@@ -132,8 +132,7 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
         {
             try
             {
-                var claim =  await _context.Lecturer
-                .FirstOrDefaultAsync(m => m.ClaimId == claimId);
+                var claim = await _context.Lecturer.Include(c => c.UploadedFiles).FirstOrDefaultAsync(m => m.ClaimId == claimId);
                 if (claim == null) { return NotFound("Claim not found."); }
 
                 var document = claim.UploadedFiles.FirstOrDefault(doc => doc.Id == docId);
@@ -164,5 +163,13 @@ namespace MonthlyClaimSystem_PartTwo.Controllers
         }
 
 
+    
+    public static int GetPendingCount() => _claims.Count(b => b.Status == ClaimStatus.Pending);
+
+        public static int GetApprovedCount() => _claims.Count(b => b.Status == ClaimStatus.Approved);
+
+        public static int GetDeclinedCount() => _claims.Count(b => b.Status == ClaimStatus.Declined);
+
+        public static int GetVerifiedCount() => _claims.Count(b => b.Status == ClaimStatus.Verified);
     }
 }
